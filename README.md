@@ -85,3 +85,5 @@ Nginx is our web server, and it should be running by default. To check it is run
 
 Press q to quit that. We can now access our webpage by typing the IP given on our AWS instance page into the search bar.
 
+![image](images/nginx_web.png)
+
