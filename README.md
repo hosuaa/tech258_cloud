@@ -2,7 +2,11 @@
 
 ## 1. Log into AWS and go to EC2
 
-- explain what an ec2 is
+AWS (Amazon Web Services) is a cloud provider that offers cloud computing services. One such service is EC2, or Elastic Compute Cloud. It essentially allows you to rent a computer from Amazons servers and perform tasks using their hardware instead of your own. These computers are known generally as 'virtual machines' which perform 'virtulisation' to emulate computer systems. AWS calls virtual machines 'instances'.
+
+![image](images/ec2.png)
+
+- To create an EC2 instance, first go to your AWS account and search for EC2.
 
 ![image](images/goto_ec2.png)
 
@@ -14,7 +18,9 @@
 
 - Name your EC2 instance (use a suitable naming convention)
 - Choose the OS image
-    - explain OS images
+
+    An OS image is a file (ending in `.iso`) that contains a pre configured operating system that we can load to boot into an OS. Think of it like a snapshot, where when we load it, the system loads an OS with the exact state the snapshot was taken (the OS image was created)
+  
     - For each OS image, there is many Amazon machine images (AMIs). Choose the AMI, ensuring you only get what is necessary as it can get expensive. If a free tier is available, try to go for that one
 
 ![image](images/ami.png)
@@ -24,12 +30,14 @@
 ![image](images/instance_type.png)
 
 - Give a key pair to login to the instance
-    - explain ssh keys
+    - To secure our instance so that not anyone can just connect to the instance, we must create a public/private SSH key pair in order to authenticate users. The keys are files which have the same name with the private key typically ending in `.pem`, with the public key thought of as the lock to our instance and the private key being the key to unlock it. Ensure the private key is ONLY in your `.ssh/` folder to maximise security. 
 
 ![image](images/key_pair.png)
 
 - Edit the network settings
     - explain security groups and ports
+    - We can secure our instance using security groups. Security groups are essentially firewalls and we can set up rules so that only specified traffic is allowed to connect with your instance. For each rule, you can specify what kind of traffic (e.g. SSH, HTTP,...) is allowed over a given port. A port is essentially the entry point to your system, and is a number that you specify at the end of the IP when connecting. Only the specified traffic given in the rule will be allowed through the port. 
+    - Some traffic can only go over a certain port. For example, HTTP traffic can only go over port 80, and with AWS this is by default.
 
 ![image](images/edit_network_settings.png)
 
@@ -45,7 +53,7 @@
 
 ![image](images/summary.png)
 
-## Connect your instance
+## 4. Connect your instance
 
 ![image](images/instance_id.png)
 
@@ -62,6 +70,8 @@ Your private key should ALWAYS be in your `.ssh` folder and secure from everybod
 After running, you should be connected to your instance, with the username 'ubuntu'
 
 ![image](images/ubuntu.png)
+
+# Setup web server 
 
 ## Install nginx
 
