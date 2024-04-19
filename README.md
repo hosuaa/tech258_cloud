@@ -81,6 +81,10 @@ sudo apt update -y
 sudo apt upgrade -y
 ```
 
+- `sudo apt update` downloads all the available updates but does not install anything. This does not change your instance's state and so is a safe operation
+- `sudo apt upgrade` installs all the downloaded updates. This actually makes changes to your instance so is quite unsafe however on first launch it is fine to run
+- `-y` means 'Yes', and autofills yes when the terminal promts for user input. This is very useful for automation
+
 ![image](images/update.png)
 
 ![image](images/upgrade.png)
