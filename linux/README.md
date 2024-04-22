@@ -89,7 +89,7 @@ You can refer to any file in your directory, or give the path to the file
 - `grep -i string filename` - Only prints lines containing string (can omit -i)
 - `nl filename` - Prints the file with numbered lines (same as `cat -n filename`)
 
-- 'source filename` -  Runs the file e.g. `source .bashrc` to reload your shell
+- `source filename` -  Runs the file e.g. `source .bashrc` to reload your shell
 
 - `nano` - Opens basic text editor
     - `ctrl-x` to exit, `ctrl-s` to save, type whatever
@@ -104,11 +104,11 @@ You can refer to any file in your directory, or give the path to the file
 
 - `systemctl status service` - Displays the status of the the given service
 - `systemctl stop service` - Stops the given service (may need sudo as it asks for perms)
-- `systemctl start (nginx)` - Starts the given service (e.g. nginx) (again sudo)
-- `systemctl restart (nginx)` - Restarts the given service(again sudo)
+- `systemctl start service` - Starts the given service (e.g. nginx) (again sudo)
+- `systemctl restart service` - Restarts the given service(again sudo)
      -useful when changing config (changes dont come into efect when running start, but DO with restart)
-`systemctl enable (nginx)` - Enables the service (again sudo)
-    - automatically runs nginx when booting linux, rather than having to manuanlly start it
+- `systemctl enable service` - Enables the service (again sudo)
+    - automatically runs (nginx) when booting linux, rather than having to manuanlly start it
 
 ## Shell editing
 
