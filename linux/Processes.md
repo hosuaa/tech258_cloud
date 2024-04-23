@@ -1,5 +1,11 @@
 # Linux processes
 
+- [Linux processes](#linux-processes)
+  - [List processes](#list-processes)
+  - [Kill processes](#kill-processes)
+  - [Parent, Child and zombie processes](#parent-child-and-zombie-processes)
+
+
 ## List processes
 
 Linux has multiple ways of listing the processes currently running:
