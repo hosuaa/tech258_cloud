@@ -12,7 +12,10 @@ sudo DEBIAN_FRONTEND=noninteractive apt install nginx -y
 echo finished installing nginx
 
 # configure reverse proxy
-# changing a config file
+echo changing the nginx/sites-enabled/default conf file
+sudo sed -i '50s/.*/\t  proxy_pass http:\/\/176.34.208.201:3000;/' /etc/nginx/sites-enabled/default
+echo changed the nginx/sites-enabled/default conf file
+
 echo restarting nginx
 sudo systemctl restart nginx
 echo finished restarting nginx
@@ -29,6 +32,10 @@ echo finished installing nodejs v20
 echo checking node version
 node -v
 echo finished checking node version
+
+# set DB_HOST env var
+# ensure ip is the same ip as the db terminal 
+export DB_HOST=mongodb://172-31-58-181:27017/posts
 
 echo getting app folder
 git clone https://github.com/hosuaa/tech258_sparta_test_app.git

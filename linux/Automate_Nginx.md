@@ -92,7 +92,6 @@ pm2 start app.js
 
 We could optionally name our app after the start command: `pm2 start app.js app` and so we could directly stop this app with `pm2 stop app`. This could be useful when running multiple apps on our instance. 
 
-
 The node app can now be accessed from the public IP address of the EC2 instance followed by port 3000
 
 By adding these lines of code to a script, we can run it and the entire process is encapsulated into one line of code: calling the script. It can be ran as many times as we wish without breaking anything (it is idempotent)
