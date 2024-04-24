@@ -8,7 +8,7 @@ Refer to Automate_Nginx.md for instructions on how to set up an Nginx web server
 
 We would like to access our node app without having to put the port in the URL. This is where reverse proxies come in, where we can redirect a url to another. We simply edit the nginx config file to redirect our url without the port to the one with one:
 ```bash
-sudo sed -i '50s/.*/\t  proxy_pass http:\/\/176.34.208.201:3000;/' /etc/nginx/sites-enabled/default
+sudo sed -i '51s/.*/\t  proxy_pass http:\/\/localhost:3000;/' /etc/nginx/sites-enabled/default
 ```
 
 ### Export database IP
@@ -60,3 +60,18 @@ sudo systemctl restart mongod
 sudo systemctl enable mongod
 
 ```
+
+## Deploy from fresh instances
+
+To deploy the app as quickly as possible, first assume we have two fresh EC2 instances:
+1. For the Nginx web server and Node app (allow SSH, HTTP and TCP port 3000)
+2. For the Mongo database (allow SSH and TCP port 27017)
+
+- On our database instance, first note down the private IPv4 address and keep it for later.
+  - Since I have the bash script to deploy the database saved in my documentation, I simply use nano to create a new `setup.sh` file, copy and paste my script in, then run `chmod 777 setup.sh` to make it executable and run it with `./setup.sh`
+
+- Now on the application instance, I again use nano to create a script file and copy and paste the script from my documentation.
+  - Using the IPv4 address from the database instance, I slightly modify the script to change the DB_HOST enivronment variable to that specific IP address. 
+- Then I made it executable and ran it.
+- After both scripts finish executing, we can navigate to the public IP address of the application instance, and if we go to `/posts`, our database contents will be displayed.
+  

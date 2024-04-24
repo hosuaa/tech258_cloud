@@ -13,7 +13,7 @@ echo finished installing nginx
 
 # configure reverse proxy
 echo changing the nginx/sites-enabled/default conf file
-sudo sed -i '50s/.*/\t  proxy_pass http:\/\/176.34.208.201:3000;/' /etc/nginx/sites-enabled/default
+sudo sed -i '51s/.*/\t  proxy_pass http:\/\/localhost:3000;/' /etc/nginx/sites-enabled/default
 echo changed the nginx/sites-enabled/default conf file
 
 echo restarting nginx
@@ -35,7 +35,7 @@ echo finished checking node version
 
 # set DB_HOST env var
 # ensure ip is the same ip as the db terminal 
-export DB_HOST=mongodb://172-31-58-181:27017/posts
+export DB_HOST=mongodb://172.31.63.51:27017/posts
 
 echo getting app folder
 git clone https://github.com/hosuaa/tech258_sparta_test_app.git
