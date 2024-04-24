@@ -75,3 +75,8 @@ To deploy the app as quickly as possible, first assume we have two fresh EC2 ins
 - Then I made it executable and ran it.
 - After both scripts finish executing, we can navigate to the public IP address of the application instance, and if we go to `/posts`, our database contents will be displayed.
   
+## Blockers
+
+I had to learn how to use the `sed` command to rewrite a line, especially since when specifying the line number it does not take into account blanck lines. 
+
+I also got stuck when specifying the IP of the database in the DB_HOST environment variable. I copied the IP from the terminal, which seperates the numbers with `-` rather than `.` (so 172-31-63-51 rather than 172.31.63.51) This was difficult to notice however now that I have made the mistake, I will remember to not do it again. 
