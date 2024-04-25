@@ -35,7 +35,6 @@ AWS (Amazon Web Services) is a cloud provider that offers cloud computing servic
 ![image](images/key_pair.png)
 
 - Edit the network settings
-    - explain security groups and ports
     - We can secure our instance using security groups. Security groups are essentially firewalls and we can set up rules so that only specified traffic is allowed to connect with your instance. For each rule, you can specify what kind of traffic (e.g. SSH, HTTP,...) is allowed over a given port. A port is essentially the entry point to your system, and is a number that you specify at the end of the IP when connecting. Only the specified traffic given in the rule will be allowed through the port. 
     - Some traffic can only go over a certain port. For example, HTTP traffic can only go over port 80, and with AWS this is by default.
 

@@ -35,11 +35,16 @@ echo finished checking node version
 
 # set DB_HOST env var
 # ensure ip is the same ip as the db terminal 
-export DB_HOST=mongodb://172.31.63.51:27017/posts
+# must at least be before npm install
+export DB_HOST=mongodb://10.0.3.4:27017/posts
 
 echo getting app folder
 git clone https://github.com/hosuaa/tech258_sparta_test_app.git
 echo got app folder
+
+# git clone https://github.com/hosuaa/tech258_sparta_test_app.git repo
+# will git clone the repository into a folder called 'repo' 
+# and then you can do cd ~/repo/app
 
 echo going to app folder
 cd ~/tech258_sparta_test_app/app

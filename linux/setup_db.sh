@@ -1,7 +1,5 @@
 #!/bin/bash
 
-# put in debian non interactive into commands which install things
-
 #update
 echo updating
 sudo apt update -y
@@ -17,10 +15,10 @@ echo finished upgrading
 echo installing mongodb
 sudo apt-get install gnupg curl -y
 # prompts to overwrite this, so just remove
-sudo rm -f /usr/share/keyrings/mongodb-server-7.0.gpg
+# sudo rm -f /usr/share/keyrings/mongodb-server-7.0.gpg
 curl -fsSL https://www.mongodb.org/static/pgp/server-7.0.asc | \
    sudo gpg -o /usr/share/keyrings/mongodb-server-7.0.gpg \
-   --dearmor
+   --dearmor --yes
 echo "deb [ arch=amd64,arm64 signed-by=/usr/share/keyrings/mongodb-server-7.0.gpg ] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/7.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-7.0.list
 sudo apt-get update
 sudo DEBIAN_FRONTEND=noninteractive apt-get install -y mongodb-org=7.0.6 mongodb-org-database=7.0.6 mongodb-org-server=7.0.6 mongodb-mongosh-shared-openssl3=2.2.4 mongodb-org-mongos=7.0.6 mongodb-org-tools=7.0.6
