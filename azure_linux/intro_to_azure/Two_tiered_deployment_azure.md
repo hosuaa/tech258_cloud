@@ -50,10 +50,10 @@ Now we can set up our virtual machines (or in AWS EC2 instances). Search up 'VM'
 8. In the app VM, we also need to crate a new network security group. Select 'Advanced' and then click 'Create new'. 
 ![alt text](two_tiered_images/image-6.png)
 9. Add two inbound rules: one for HTTP and one for TCP port 3000 (for node). Change the destination port target to 3000 for node. 
-- For our database, we only need to allow SSH traffic so we do not need to configure this. We do not need to allow TCP port 27017 for mongodb since Azure uses Cosmos. Azure Cosmos DB handles the management of ports, endpoints, and connectivity internally as a microservice, so we do not need to configure it. 
+- For our database, we only need to allow SSH traffic so we do not need to configure this. We do not need to allow TCP port 27017 for mongodb since Azure, by default, allows all inbound traffic between instances, so port 27017 is open by default when connecting with the private IP of the database.. 
 ![alt text](two_tiered_images/image-8.png)
-10.  Leave the other settings alone. Click create and go to the VMs on your homepage.
-11.  Now connect in a similar way to AWS
+1.   Leave the other settings alone. Click create and go to the VMs on your homepage.
+2.   Now connect in a similar way to AWS. You can give the path to your private key and get an easy to copy and paste command to log in.
 ![alt text](two_tiered_images/image-10.png)
 ![alt text](two_tiered_images/image-11.png)
-12. Run the scripts in the corresponding instances. The 2 tiered app is now deployed on Azure.
+1.  Run the scripts in the corresponding instances. The 2 tiered app is now deployed on Azure.

@@ -39,6 +39,8 @@ echo finished checking node version
 export DB_HOST=mongodb://10.0.3.4:27017/posts
 
 echo getting app folder
+# used for user data as it starts in /
+cd ~
 git clone https://github.com/hosuaa/tech258_sparta_test_app.git
 echo got app folder
 
@@ -48,6 +50,7 @@ echo got app folder
 
 echo going to app folder
 cd ~/tech258_sparta_test_app/app
+pwd
 echo in app folder
 
 echo installing app
