@@ -40,7 +40,7 @@ export DB_HOST=mongodb://10.0.3.4:27017/posts
 
 echo getting app folder
 # used for user data as it starts in /
-cd ~
+# cd ~
 git clone https://github.com/hosuaa/tech258_sparta_test_app.git
 echo got app folder
 
@@ -49,8 +49,8 @@ echo got app folder
 # and then you can do cd ~/repo/app
 
 echo going to app folder
-cd ~/tech258_sparta_test_app/app
-pwd
+# cd ~/tech258_sparta_test_app/app
+cd /tech258_sparta_test_app/app
 echo in app folder
 
 echo installing app

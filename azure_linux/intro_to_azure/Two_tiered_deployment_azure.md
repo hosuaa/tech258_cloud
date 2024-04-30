@@ -32,6 +32,8 @@ Now we need to create two subnets: one public one and one private one. The publi
 
 ![alt text](two_tiered_images/image.png)
 
+Azure will always attempt to use the first private IP available. For example, the private IP of the database will typically be 10.0.3.4
+
 ## Setup VM 
 
 Now we can set up our virtual machines (or in AWS EC2 instances). Search up 'VM' and create two virtual machine instances. They will be mostly the same but with some key differences.
@@ -52,8 +54,29 @@ Now we can set up our virtual machines (or in AWS EC2 instances). Search up 'VM'
 9. Add two inbound rules: one for HTTP and one for TCP port 3000 (for node). Change the destination port target to 3000 for node. 
 - For our database, we only need to allow SSH traffic so we do not need to configure this. We do not need to allow TCP port 27017 for mongodb since Azure, by default, allows all inbound traffic between instances, so port 27017 is open by default when connecting with the private IP of the database.. 
 ![alt text](two_tiered_images/image-8.png)
-1.   Leave the other settings alone. Click create and go to the VMs on your homepage.
-2.   Now connect in a similar way to AWS. You can give the path to your private key and get an easy to copy and paste command to log in.
+10.   Leave the other settings alone. Click create and go to the VMs on your homepage.
+11.   Now connect in a similar way to AWS. You can give the path to your private key and get an easy to copy and paste command to log in.
 ![alt text](two_tiered_images/image-10.png)
 ![alt text](two_tiered_images/image-11.png)
-1.  Run the scripts in the corresponding instances. The 2 tiered app is now deployed on Azure.
+12.  Run the scripts in the corresponding instances. The 2 tiered app is now deployed on Azure.
+   
+## Deleting the VM
+
+In AWS, when we terminate our instance, it cleans up after itself. In Azure however, we need to remember to delete more things as they can cost money. Remember to delete:
+- The virtual machine
+- The public IP address
+- The network interface
+
+SSH keys, network security groups and virtual networks do not cost any money. As a result it is not necessary to delete these, however you can just to clean up after yourself.
+
+You can stop a machine without deallocating (keeps cpu, memory, resources etc), and you would still be paying for the VM if so. When stopping and deallocating, you still pay some, but no where near as much. Deleting the instance removes all costs.
+
+## Accessing the app folder
+
+You may have access to the app folder or not depending on where the app folder was cloned to. If it was cloned to the adminuser directory, you will be able to access it but when converting to an image it will not be saved (the adminuser directory is deleted). Therefore we need to save it to a parent directory.
+
+We would like it to be saved to `/` so that the file path is `/repo/app`. It may also be saved to `/home/root/repo/app`. We will not be able to directly access these when SSHing in as we are adminuser, not root which has elevated privilages. There are a few ways we could access the app:
+- Use `sudo -E` to preserve the existing environment variables
+- Log in as root with `sudo su -`
+- (Recursively) Change the file permissions with `sudo chmod -R`
+- (Recursively) Change the file owner with `sudo chown -R`

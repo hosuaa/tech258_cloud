@@ -2,6 +2,9 @@
 
 After any command (e.g. `uname`), we can give the option `--help` to print how to use the command. E.g. `uname --help`
 
+https://explainshell.com/ 
+- Really good at explaining what commands do
+
 ## System information
 
 - `uname` - Prints some system information. With no option, prints the kernel name
