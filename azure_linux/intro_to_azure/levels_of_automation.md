@@ -55,7 +55,7 @@ waagent -deprovision+user
 This removes machine-specific information and configurations such as machine IDs, network configurations, SSH host keys, user accounts so that when the image is deployed to a new virtual machine, it doesn't conflict with other machines or retain any unique identifiers from the original instance.
 - `deprovision` removes the configurations, `user` removes the user accounts.
 
-![alt text](image-2.png)
+![alt text](levels_of_automation_images/image-2rr.png)
 
 Now we can capture the image
 
@@ -81,12 +81,12 @@ Alternatively select 'No, create a managed image', and then you will not have to
 
 If you get the following error:
 
-![alt text](image.png)
+![alt text](levels_of_automation_images/imagerr.png)
 
 You will not be able to create a managed image
    - To fix this, ensure the VM is not 'trusted launch' - a setting you change when setting up the VM
 
-![alt text](image-1.png)
+![alt text](levels_of_automation_images/image-1rr.png)
 
 Now navigate to 'Images' and 'Create VM' for your image
 
