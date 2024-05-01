@@ -34,6 +34,8 @@ Now we need to create two subnets: one public one and one private one. The publi
 
 Azure will always attempt to use the first private IP available. For example, the private IP of the database will typically be 10.0.3.4
 
+It doesn't start from 10.0.3.1 since those IP addresses are reserved for special instances.
+
 ## Setup VM 
 
 Now we can set up our virtual machines (or in AWS EC2 instances). Search up 'VM' and create two virtual machine instances. They will be mostly the same but with some key differences.

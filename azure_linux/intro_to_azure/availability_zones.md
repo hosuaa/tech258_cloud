@@ -17,3 +17,6 @@ This can be useful if you want to back up your data. For example, if a data cent
 
 However this increases complexity as you have to manage resources across multiple zones. Zones are also not available in all regions, and in this case you are forced to use a set. Zones are also physically far apart, and so there is some latency between the VMs.
 
+
+
+![alt text](image.png)
