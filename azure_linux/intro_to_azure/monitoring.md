@@ -255,8 +255,9 @@ You can test the scale set by going to the sidebar->operating system:
 ### Unhealthy instances
 
 Our instances should be healthy at first. We can make an instance unhealthy by stopping and starting one, as the user data will not run so the app will not be running.
+- The Health check will send a get request to the website, and if the response is not 200 (OK) then the instance will be marked as unhealthy
 - After 10m (the grace period set) our scale set will remove unhealthy instances and recreate new ones if needed.
 
 ## Clean up scale set
 
-To clean up, delete the scale set, then the load balancer then the public ip of load balancer (cant do public ip since it is associated with the load balancer itself)
+To clean up, delete the scale set, then the load balancer then the public ip of load balancer (can't do public IP since it is associated with the load balancer itself)
