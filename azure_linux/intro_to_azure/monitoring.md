@@ -36,14 +36,14 @@ A VM scale set uses the final custom image + a little user data.
 - We need to set up policies - "custom auto scale"
   - Parameters - when will it scale?
   - E.g. if average CPU usage goes above 75%, it is time to create new VMs.
-  - Also need to specify the minimum and maximum number of VMs and default (min - 2 VMS normally, max - 3 when under load, default - 2)
+  - Also need to specify the minimum and maximum number of VMs and default (min - 2 VMS normally, max - 3 when under load, default/initial - 2)
 - The VMs as a whole would then go in the virtual network in the corresponding subnet e.g. app ones would go in public, db in private.
   - Each VM would go into a different availability zone (zone1, zone2...)
 
 ![alt text](monitoring_images/vmscaleset.jpg)
 
 This ensures high availability and scalability (HA+SC)
-- **High availability** - if one zone goes down, we use another zones VM
+- **High availability** - if one zone goes down, we use another zones VM and we have a minimum of 2 so if one goes down another is always running
 - **Scalability** - there is a minimum of 2 VMs and under load we can open more VMs (e.g. 3)
 
 ### Load balancer
@@ -168,6 +168,95 @@ Choose what to include in the email
 
 Now send the requests using apache bench and check if an email is sent.
 
-Once the email is recieved remember to delete action rule and action group and dashboard.
+### Clean up alerts 
+
+Once the email is recieved remember to delete action rule, action group and dashboard.
 
 ## Create a VM Scale set on Azure
+
+Our scale set will have 2 VMs running initially, and if average CPU usage increases that will go up to 3. If any turn unhealthy, after 10 mins it will redeploy the VM (delete the unhealthy and start a new one)
+
+Firstly, ensure you have well tested custom image and user data, that is able to quickly load up the app.
+
+Once that is ready, navigate to 'Virtual machine scale sets' and 'Create'
+
+![alt text](image.png)
+
+Select the availability zones the VMs will be launched in. We want our scale set to cover all 3 availability zones to ensure high availability. 
+
+![alt text](image-1.png)
+
+We can select flexible or uniform orchestration. In uniform, the VMs are identical and is sufficient for this task, but flexible can be used if we want the VMs created under load to e.g. have better CPUs.
+
+![alt text](image-2.png)
+
+Now choose scaling - when will the scale set create or destroy instances. We want autoscaling so that the instaces are scaled automatically based on the chosen metric
+
+![alt text](image-3.png)
+
+The chosen metric here is average CPU usage, so if in any of our instances the average CPU usage goes above 75%, it will deploy a new instance (scale out), checking every 10 mins. If the threshold goes below 20%, delete an instance if it is above the minimum number of instances (min - 2, max - 3).
+
+![alt text](image-4.png)
+
+![alt text](image-5.png)
+
+Now follow a similar process to deploying a VM:
+- select your custom image
+- standard b1s, ssh, license type other
+- skip spot (the VMs are cheaper but can dissapear if Azure needs the resources)
+
+In networking, pick your virtual network and edit the network interface in it:
+- Choose the correct subnet (public for app) and correct network security group (needs http and ssh at least for the app to work)
+
+![alt text](image-6.png)
+
+### Creating the load balancer
+
+Now we need to create the load balancer which handles the incoming traffic and directs it to an appropriate healthy instance. 
+
+The default settings are fine: 
+- public as there are outbound connections (access via internet)
+- TCP
+- Load balancer recieves traffic from port 80. It would typically use backend port 3000 to connect to our app, but since we set up a reverse proxy we do not need to do that so leave that at 80
+- for NAT, to connect to our VMs through the load balancer, it goes to port 50000 for the first vm, 50001 for the 2nd vm etc, and that redirects it to port 22 for SSHing in
+
+![alt text](image-7.png)
+![alt text](image-8.png)
+![alt text](image-9.png)
+
+
+In Health, ensure application health monitoring is ticked so that the scale set tests the connection to the website, and can determine whether the instances are healthy or unhealthy
+
+![alt text](image-10.png)
+
+Also check automatic repairs so that something wrong with the instance (it is unhealthy), it has 10m to recover before another is launched
+
+![alt text](image-11.png)
+
+In advanced, put in user data to set up VM as normal
+
+Tags then review and create 
+
+## SSH in to instances through load balancer
+
+The load balancer has 1 public IP address that is used to connect to the instances and will send traffic to any healthy VM.
+
+To connect to one of our instances go to connect but change the private ip given to the public ip (all the instances have the same public, just different private ones) and the port the load balancer needs for that instance (starting from 50000, then 50001. use -p to connect to a specific port):
+```bash
+ssh -i ~/.ssh/tech258_joshual_azkey -p 50001 adminuser@4.158.79.255
+```
+
+## Testing the scale set
+
+You can test the scale set by going to the sidebar->operating system:
+- Displays image used to create
+- Shows user data used - you can modify it, then reimage or upgrade your instances to reapply the changes to user data (Cannot just restart the instances)
+
+### Unhealthy instances
+
+Our instances should be healthy at first. We can make an instance unhealthy by stopping and starting one, as the user data will not run so the app will not be running.
+- After 10m (the grace period set) our scale set will remove unhealthy instances and recreate new ones if needed.
+
+## Clean up scale set
+
+To clean up, delete the scale set, then the load balancer then the public ip of load balancer (cant do public ip since it is associated with the load balancer itself)
