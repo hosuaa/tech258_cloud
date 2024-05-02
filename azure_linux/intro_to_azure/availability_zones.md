@@ -8,6 +8,8 @@ As a result, there is not much latency between the VMs are they are physically c
 
 However, while fault tolerant, they are not risk free. 
 
+(if one vm is updated, only one is at that time and the others can be updated later. ensures high availability as we can do testing on that one, and the others still work with the previous code)
+
 ## Availability zones
 
 An availability zone is a physical zone (in an Azure region; 3 per region). Each availability Zone has a distinct power source, network, and cooling, and you can assign VMs to any of them. 

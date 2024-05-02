@@ -24,6 +24,7 @@ We want if a resource is overloaded on a VM such as CPU usage then another VM wi
 Azure uses **VM Scale Sets** and AWS uses **Auto Scaling Groups**
 
 We can scale out, or scale in (create more VMs or delete existing ones automatically based on the alert)
+- NOT scale up/down (refers to a singular VM increasing/decreasing in size), this is about creating more identical VMs.
 
 We start with our custom image created by the VM we prepared with everything to run the app.
 - We used a marketplace image (ubuntu 22.04) to create the VM
@@ -195,6 +196,7 @@ Now choose scaling - when will the scale set create or destroy instances. We wan
 ![alt text](monitoring_images/image-3ss.png)
 
 The chosen metric here is average CPU usage, so if in any of our instances the average CPU usage goes above 75%, it will deploy a new instance (scale out), checking every 10 mins. If the threshold goes below 20%, delete an instance if it is above the minimum number of instances (scale in) (min - 2, max - 3). This ensures scalability
+- If the CPU usage was high, we scale up, creating a new VM to ensure high availability.
 
 ![alt text](monitoring_images/image-4ss.png)
 
