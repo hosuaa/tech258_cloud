@@ -23,7 +23,7 @@ We want if a resource is overloaded on a VM such as CPU usage then another VM wi
 
 Azure uses **VM Scale Sets** and AWS uses **Auto Scaling Groups**
 
-We can scale out, or scale in
+We can scale out, or scale in (create more VMs or delete existing ones automatically based on the alert)
 
 We start with our custom image created by the VM we prepared with everything to run the app.
 - We used a marketplace image (ubuntu 22.04) to create the VM
@@ -44,7 +44,7 @@ A VM scale set uses the final custom image + a little user data.
 
 This ensures high availability and scalability (HA+SC)
 - **High availability** - if one zone goes down, we use another zones VM and we have a minimum of 2 so if one goes down another is always running
-- **Scalability** - there is a minimum of 2 VMs and under load we can open more VMs (e.g. 3)
+- **Scalability** - there is a minimum of 2 VMs and under load we can open more VMs (e.g. 3) (we can scale out or in)
 
 ### Load balancer
 
@@ -180,25 +180,25 @@ Firstly, ensure you have well tested custom image and user data, that is able to
 
 Once that is ready, navigate to 'Virtual machine scale sets' and 'Create'
 
-![alt text](image.png)
+![alt text](monitoring_images/imagess.png)
 
-Select the availability zones the VMs will be launched in. We want our scale set to cover all 3 availability zones to ensure high availability. 
+Select the availability zones the VMs will be launched in. We want our scale set to cover all 3 availability zones to ensure high availability. If any data center goes down and the VM associated with it goes with it, the scale set will redirect traffic to another zone's data center with a working VM.
 
-![alt text](image-1.png)
+![alt text](monitoring_images/image-1ss.png)
 
 We can select flexible or uniform orchestration. In uniform, the VMs are identical and is sufficient for this task, but flexible can be used if we want the VMs created under load to e.g. have better CPUs.
 
-![alt text](image-2.png)
+![alt text](monitoring_images/image-2ss.png)
 
 Now choose scaling - when will the scale set create or destroy instances. We want autoscaling so that the instaces are scaled automatically based on the chosen metric
 
-![alt text](image-3.png)
+![alt text](monitoring_images/image-3ss.png)
 
-The chosen metric here is average CPU usage, so if in any of our instances the average CPU usage goes above 75%, it will deploy a new instance (scale out), checking every 10 mins. If the threshold goes below 20%, delete an instance if it is above the minimum number of instances (min - 2, max - 3).
+The chosen metric here is average CPU usage, so if in any of our instances the average CPU usage goes above 75%, it will deploy a new instance (scale out), checking every 10 mins. If the threshold goes below 20%, delete an instance if it is above the minimum number of instances (scale in) (min - 2, max - 3). This ensures scalability
 
-![alt text](image-4.png)
+![alt text](monitoring_images/image-4ss.png)
 
-![alt text](image-5.png)
+![alt text](monitoring_images/image-5ss.png)
 
 Now follow a similar process to deploying a VM:
 - select your custom image
@@ -208,7 +208,7 @@ Now follow a similar process to deploying a VM:
 In networking, pick your virtual network and edit the network interface in it:
 - Choose the correct subnet (public for app) and correct network security group (needs http and ssh at least for the app to work)
 
-![alt text](image-6.png)
+![alt text](monitoring_images/image-6ss.png)
 
 ### Creating the load balancer
 
@@ -220,18 +220,18 @@ The default settings are fine:
 - Load balancer recieves traffic from port 80. It would typically use backend port 3000 to connect to our app, but since we set up a reverse proxy we do not need to do that so leave that at 80
 - for NAT, to connect to our VMs through the load balancer, it goes to port 50000 for the first vm, 50001 for the 2nd vm etc, and that redirects it to port 22 for SSHing in
 
-![alt text](image-7.png)
-![alt text](image-8.png)
-![alt text](image-9.png)
+![alt text](monitoring_images/image-7ss.png)
+![alt text](monitoring_images/image-8ss.png)
+![alt text](monitoring_images/image-9ss.png)
 
 
 In Health, ensure application health monitoring is ticked so that the scale set tests the connection to the website, and can determine whether the instances are healthy or unhealthy
 
-![alt text](image-10.png)
+![alt text](monitoring_images/image-10ss.png)
 
-Also check automatic repairs so that something wrong with the instance (it is unhealthy), it has 10m to recover before another is launched
+Also check automatic repairs so that something wrong with the instance (it is unhealthy), it has 10m to recover before another is launched, ensuring high availability
 
-![alt text](image-11.png)
+![alt text](monitoring_images/image-11ss.png)
 
 In advanced, put in user data to set up VM as normal
 
