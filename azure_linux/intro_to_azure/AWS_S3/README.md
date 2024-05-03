@@ -77,7 +77,7 @@ aws s3 sync s3://<bucket name> <directory>
  aws s3 rm s3://<bucket name>/<filename>
 ```
 
-:warning: :boom Dangerous - deletes everything without warning :boom: :warning: <br>
+:warning: :boom: Dangerous - deletes everything without warning :boom: :warning: <br>
 8. Delete all files from bucket:
 ```bash
 aws s3 rm s3://<bucket name> --recursive
@@ -89,7 +89,7 @@ aws s3 rm s3://<bucket name> --recursive
 ```bash
 aws s3 rb s3://<bucket name>
 ```
-:warning: :boom Dangerous - deletes everything without warning :boom: :warning: <br>
+:warning: :boom: Dangerous - deletes everything without warning :boom: :warning: <br>
 ```bash
 aws s3 rb s3://<bucket name> --force
 ```
